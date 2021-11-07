@@ -325,7 +325,7 @@ def specific_type(table_num):
         """
     elif table_num == '2':
         sql_specific_query = """ select * from (select p.title, c.body, c.date from comments c 
-                                left join posts p on c.post_id = p.post_id  where p.author_id = %s) AS foo 
+                                left join posts p on c.post_id = p.post_id  where c.author_id = %s) AS foo 
                                 WHERE title LIKE %s AND date > %s;"""
     elif table_num == '3':
         sql_specific_query = """select uid, fn, em  from (select user_id as uid, f_name as fn, email as em, count(title) 
@@ -350,6 +350,18 @@ def select_type(table_num):
     return sql_select_query
 
 
+def origin_type(table_num):
+    if table_num == 1:
+        sql_origin_val = """ SELECT users.user_id FROM users WHERE user_id = %s """
+    elif table_num == 2:
+        sql_origin_val = """ SELECT posts.post_id FROM posts WHERE post_id = %s """
+    elif table_num == 3:
+        sql_origin_val = """ SELECT likes.like_id FROM likes WHERE like_id = %s """
+    elif table_num == 4:
+        sql_origin_val = """ SELECT comments.comment_id FROM comments WHERE comment_id = %s"""
+    return sql_origin_val
+
+
 def get_times(val):
     print(f"How much rows do you wanna {val}? ")
     amount = input()
@@ -360,7 +372,7 @@ def get_times(val):
         get_times(val)
 
 
-def     validation_string_value(value, err_func):
+def validation_string_value(value, err_func):
     if value is None or value == '':
         print("Error, column cannot contain NULL value")
         err_func()

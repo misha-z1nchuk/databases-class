@@ -1,5 +1,5 @@
 import time
-
+from middleware.sqlmiddle import origin_type
 import psycopg2
 
 
@@ -33,7 +33,7 @@ class Model:
     def only_possible(self, val, num, err_func):
         try:
             rec = [(val,)]
-            sql_origin = self.origin_type(num)
+            sql_origin = origin_type(num)
             curs = self.connection.cursor()
             curs.execute(sql_origin, rec)
             records = curs.fetchall()
@@ -93,14 +93,4 @@ class Model:
                 self.cursor.close()
             return records
 
-    @staticmethod
-    def origin_type(table_num):
-        if table_num == 1:
-            sql_origin_val = """ SELECT users.user_id FROM users WHERE user_id = %s """
-        elif table_num == 2:
-            sql_origin_val = """ SELECT posts.post_id FROM posts WHERE post_id = %s """
-        elif table_num == 3:
-            sql_origin_val = """ SELECT likes.like_id FROM likes WHERE like_id = %s """
-        elif table_num == 4:
-            sql_origin_val = """ SELECT comments.comment_id FROM comments WHERE comment_id = %s"""
-        return sql_origin_val
+
