@@ -67,28 +67,28 @@ class Controller:
     def rand_or_man(self):
         option = View.display("Do you want to insert rows manually or randomly? \nPress M if manually, R if randomly: ")
         if option != 'M' and option != 'R':
-            print("You entered wrong value")
+            View.print_text("You entered wrong value")
             self.if_exit()
         return option;
 
     def if_exit(self):
-        ext = input("Do you want to exit? Press M to go to the main menu, or E to exit: ")
+        ext = View.display("Do you want to exit? Press M to go to the main menu, or E to exit: ")
         if ext == 'M':
             self.manage_choice()
         elif ext == 'E':
             # self.model.close_connect()
             exit()
         else:
-            print("You entered wrong character...")
+            View.print_text("You entered wrong character...")
             self.if_exit()
 
     def to_continue(self):
-        cont = input("Do you want to continue? Press Y if yes, N if no: ")
+        cont = View.display("Do you want to continue? Press Y if yes, N if no: ")
         if cont == 'Y':
             return True
         elif cont == 'N':
             return False
         else:
-            print("You entered wrong value, please try again")
+            View.print_text("You entered wrong value, please try again")
             self.to_continue()
 
